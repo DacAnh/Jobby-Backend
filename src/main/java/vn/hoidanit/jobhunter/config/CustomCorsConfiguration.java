@@ -16,7 +16,10 @@ public class CustomCorsConfiguration {
         configuration.setAllowedOrigins(Arrays.asList(
                 "http://localhost:3000",
                 "http://localhost:4173",
-                "http://localhost:5173"));
+                "http://localhost:5173",
+                "http://jobby-vn.up.railway.app",
+                "https://jobby-vn.up.railway.app"
+                ));
 
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS")); // Allowed methods
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "Accept","x-no-retry"));
