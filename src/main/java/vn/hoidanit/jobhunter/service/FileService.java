@@ -43,6 +43,9 @@ public class FileService {
         // create unique filename
         String finalName = System.currentTimeMillis() + "-" + file.getOriginalFilename();
 
+        //Thay thế tất cả khoảng trắng bằng dấu gạch dưới
+        finalName = finalName.replaceAll("\\s+", "_");
+
         URI uri = new URI(baseURI + folder + "/" + finalName);
         Path path = Paths.get(uri);
         try (InputStream inputStream = file.getInputStream()) {
