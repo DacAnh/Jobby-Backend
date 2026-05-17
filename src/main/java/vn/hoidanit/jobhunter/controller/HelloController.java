@@ -9,6 +9,6 @@ public class HelloController {
 
     @GetMapping("/")
     public ResponseEntity<String> getHelloWorld() {
-        return ResponseEntity.ok("Hello World (Hỏi Dân IT & Eric)");
+        return ResponseEntity.ok("Hello World [VN AnhSP]");
     }
 }
