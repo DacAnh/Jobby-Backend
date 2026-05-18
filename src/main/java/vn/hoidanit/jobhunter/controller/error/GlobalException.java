@@ -25,7 +25,7 @@ public class GlobalException {
         RestResponse<Object> res= new RestResponse<Object>();
         res.setStatusCode(HttpStatus.BAD_REQUEST.value());
         res.setError(ex.getMessage());
-        res.setMessage("Exception...");
+        res.setMessage("Tài khoản hoặc mật khẩu không chính xác");
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(res);
     }
 
@@ -44,7 +44,7 @@ public class GlobalException {
         RestResponse<Object> res = new RestResponse<>();
         res.setStatusCode(HttpStatus.BAD_REQUEST.value());
         res.setError(ex.getMessage());
-        res.setMessage("Exception...");
+        res.setMessage("Lỗi tạo tài khoản");
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(res);
     }
 
@@ -85,7 +85,7 @@ public class GlobalException {
         RestResponse<Object> res= new RestResponse<Object>();
         res.setStatusCode(HttpStatus.BAD_REQUEST.value());
         res.setError(ex.getMessage());
-        res.setMessage("Exception upload file...");
+        res.setMessage("Lỗi tải file");
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(res);
     }
 //    @ExceptionHandler(value = {
