@@ -117,6 +117,9 @@ public class AuthController {
         userLoginDTO.setRole(currentUser.getRole());
 
         userGetAccount.setUser(userLoginDTO);
+        userGetAccount.setAge(currentUser.getAge());
+        userGetAccount.setGender(String.valueOf(currentUser.getGender()));
+        userGetAccount.setAddress(currentUser.getAddress());
         return ResponseEntity.ok(userGetAccount);
     }
 

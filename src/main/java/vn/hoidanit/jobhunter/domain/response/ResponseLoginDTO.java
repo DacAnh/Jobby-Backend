@@ -30,6 +30,9 @@ public class ResponseLoginDTO {
     @NoArgsConstructor
     public static class UserGetAccount{
         private UserLoginDTO user;
+        private int age;
+        private String gender;
+        private String address;
     }
 
     @JsonProperty("access_token")
