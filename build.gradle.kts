@@ -36,6 +36,9 @@ dependencies {
 //	khác với viết thủ công từng predicate (Specification) ứng với từng tiêu chí filter
 //	Tuy nhiên việc dùng thư viện bên ngoài, bắt buộc phải tuân theo quy tắc của thư viện đó
 	implementation("com.turkraft.springfilter:jpa:3.1.7")
+
+//	THƯ VIỆN GỬI MAIL
+	implementation("org.springframework.boot:spring-boot-starter-mail")
 }
 
 tasks.withType<Test> {

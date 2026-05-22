@@ -31,6 +31,7 @@ public class ResumeService {
     private final ResumeRepository resumeRepository;
     private final JobRepository jobRepository;
     private final UserRepository userRepository;
+    private final EmailService emailService;
 
     @Autowired
     FilterBuilder filterBuilder;
@@ -39,12 +40,18 @@ public class ResumeService {
     @Autowired
     private FilterSpecificationConverter filterSpecificationConverter;
 
-    public ResumeService(ResumeRepository resumeRepository, JobRepository jobRepository, UserRepository userRepository, FilterParser filterParser, FilterSpecificationConverter filterSpecificationConverter) {
+    public ResumeService(ResumeRepository resumeRepository,
+                         JobRepository jobRepository,
+                         UserRepository userRepository,
+                         FilterParser filterParser,
+                         FilterSpecificationConverter filterSpecificationConverter,
+                         EmailService emailService) {
         this.resumeRepository = resumeRepository;
         this.jobRepository = jobRepository;
         this.userRepository = userRepository;
         this.filterParser = filterParser;
         this.filterSpecificationConverter = filterSpecificationConverter;
+        this.emailService = emailService;
     }
     public boolean checkResumeExistByUserAndJob(Resume resume){
 
@@ -67,6 +74,33 @@ public class ResumeService {
     public ResCreateResumeDTO create(Resume resume){
         resume = this.resumeRepository.save(resume);
 
+        // 2. Lấy thông tin ứng viên và công việc để điền vào Email
+        // (Do lúc khởi tạo, đối tượng Job và User chỉ mới có ID, nên ta phải query để lấy các thông tin cần thiết)
+        String candidateEmail = resume.getEmail();
+        String candidateName = "Ứng viên";
+        String jobTitle = "Vị trí đã chọn";
+        String companyName = "Nhà tuyển dụng";
+
+        if(resume.getUser() != null) {
+            Optional<User> userOpt = this.userRepository.findById(resume.getUser().getId());
+            if(userOpt.isPresent()) candidateName = userOpt.get().getName();
+        }
+
+        if(resume.getJob() != null) {
+            Optional<Job> jobOpt = this.jobRepository.findById(resume.getJob().getId());
+            if(jobOpt.isPresent()) {
+                Job job = jobOpt.get();
+                jobTitle = job.getName();
+                if(job.getCompany() != null) {
+                    companyName = job.getCompany().getName();
+                }
+            }
+        }
+
+        // 3. Kích hoạt luồng gửi mail
+        this.emailService.sendNotificationEmail(candidateEmail, candidateName, jobTitle, companyName);
+
+        // 4. Trả về DTO như bình thường
         return this.toResCreateResumeDTO(resume);
     }
 
