@@ -52,10 +52,9 @@ public class EmailService {
             javaMailSender.send(mimeMessage);
             System.out.println(">>> ĐÃ GỬI EMAIL THÔNG BÁO ỨNG TUYỂN ĐẾN: " + toEmail);
 
-        } catch (MessagingException e) {
+        } catch (Exception e) {
+            // Đổi MessagingException thành Exception chung để bắt cả lỗi UnsupportedEncodingException do dùng tiếng Việt ở tên gửi
             System.err.println(">>> LỖI GỬI EMAIL: " + e.getMessage());
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
         }
     }
 }
